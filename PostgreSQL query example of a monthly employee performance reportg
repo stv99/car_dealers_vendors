@@ -1,0 +1,57 @@
+-- Full Month Report
+-- This report is designed to provide insights into employee performance on a monthly basis. 
+-- The aim is to ensure optimal workload distribution and maximize employee productivity.
+
+/* Total billing by employee: This query calculates the total billing amount for each employee within a month.
+   Employees with a total billing amount below $10,000 will be evaluated to ensure no work is left behind and 
+   to assess if they need more workload. Kudos to those employees with a total billing amount above $12,000 */
+
+SELECT "User", sum("Price") as total_billing
+FROM public."Raw_Data"
+WHERE "Device_Date_Created" between '2024-05-01' and '2024-06-01'
+group by "User"
+order by sum("Price")DESC
+;
+/* Daily billing range: This query identifies the maximum and minimum billing amounts in a single day for each employee.
+   Days with a billing amount below $300 are flagged for review as they may not be cost-effective. We may need to modify schedules */
+
+SELECT "User", MAX(daily_billing) AS BiggestDay, MIN (daily_billing) AS SmallestDay
+FROM (
+	SELECT "User", DATE_TRUNC('day', "Device_Date_Created") AS day, SUM("Price") AS daily_billing
+	FROM public."Raw_Data"
+	WHERE "Device_Date_Created" BETWEEN '2024-05-01' AND '2024-06-01'
+	GROUP BY day,"User"
+) AS subquery
+Group by "User"
+
+/* Daily performance analysis: This set of queries provides a granular view of each employee's daily performance.
+Good practices are established by comparing to the top performers, and drawing conclusions from there;
+Best performers develop a certain consistency; starting time around 8-9, daily workload of 6h or more,
+daily billing around $500 or more.*/
+
+--User_1    
+SELECT "User", MIN("Device_Date_Created") - INTERVAL '30 MINUTES' as startingtimeET,  
+ MAX("Device_Date_Created")-MIN("Device_Date_Created")+ INTERVAL '1 HOUR' AS TOTALHOURS,
+DATE_TRUNC('day',"Device_Date_Created" ) as day,
+SUM("Price") AS Totalbilledbyday
+FROM public."Raw_Data"
+where  "Device_Date_Created" between '2024/05/01' and '2024/06/01'
+and "User"= 'User_1'
+group by "User", day
+order by day
+;
+
+--User_2
+SELECT "User", MIN("Device_Date_Created") - INTERVAL '30 MINUTES' as startingtimeET,  
+ MAX("Device_Date_Created")-MIN("Device_Date_Created")+ INTERVAL '1 HOUR' AS TOTALHOURS,
+DATE_TRUNC('day',"Device_Date_Created" ) as day,
+SUM("Price") AS Totalbilledbyday
+FROM public."Raw_Data"
+where  "Device_Date_Created" between '2024/05/01' and '2024/06/01'
+and "User"= 'User_2'
+group by "User", day
+order by day
+;
+
+--we can keep going with all the eployees, or compare to previos months/years
+--also coming soon the other side of this analysis checkig for our customers performances
