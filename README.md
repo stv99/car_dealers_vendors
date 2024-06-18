@@ -1,6 +1,6 @@
 
 Car Dealership Database Project
-This project is a personal project while learning PostgreSQL. It’s a work in progress, aimed at constructing a practical database for vendors collaborating with car dealerships. 
+This project is a personal project while learning PostgreSQL. It’s a work in progress, aimed at building a practical database for vendors collaborating with car dealerships. 
 The heart of this database is the cars table, representing the product we’re dealing with. Each service is always associated with a unique car. The cars table includes fields such as VIN (unique to each car), stock number, make, model, year, color, trim, type (new/used), and customer_id (unique to each dealership).
 When dealing with car images, a secondary table is required to store these images (or the paths to these images). This table includes fields such as VIN, upload date, photo order, image (or image path), customer_id, and user_id or employee.
 Supporting the cars table is the customers table. Each car is always associated with a dealership. The customers table includes fields such as customer_id, dealership name, address, city, zip, state, work area, and contact_id.
