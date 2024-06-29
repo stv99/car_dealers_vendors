@@ -12,3 +12,4 @@ To assist in organizing employee routes and schedules, a routes table has been a
 The next phase of this project involves the development of a new table to facilitate billing services. Coming soon…
 This project is all about learning SSMS and the practical application of the same in a real-world scenario. Contributions and suggestions are always welcome!
 
+![SSMS cardealers vendors DB doagram](https://github.com/stv99/car_dealers_vendors/assets/164451966/09cc39da-6e61-45e9-a670-5781dfa57d8b)
